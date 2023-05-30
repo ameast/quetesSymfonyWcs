@@ -10,35 +10,35 @@ use Doctrine\Persistence\ObjectManager;
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
 
-    const series = [
+    const PROGRAMS = [
             [
                 'title' => 'Stranger Things',
                 'synopsis' => 'Un groupe d\'enfants affronte des forces surnaturelles dans une petite ville',
-                'category' => 'category_Fantastique'
+                'category' => 'Fantastique',
             ],
             [
                 'title' => 'Game of Thrones',
                 'synopsis' => 'Intrigues, batailles et luttes de pouvoir dans les Sept Royaumes',
-                'category' => 'category_Fantastique'
+                'category' => 'Fantastique',
             ],
             [
                 'title' => 'Breaking Bad',
                 'synopsis' => 'Un professeur de chimie devient un redoutable trafiquant de drogue',
-                'category' => 'category_Aventure'
+                'category' => 'Aventure',
             ],
             [
                 'title' => 'Friends',
                 'synopsis' => 'Un groupe d\'amis vit des situations comiques à New York',
-                'category' => 'category_Aventure'
+                'category' => 'Aventure',
             ],
     ];
     public function load(ObjectManager $manager): void
     {
-        foreach (self::series as $serie) {
+        foreach (self::PROGRAMS as  $key=> $sub_program) {
             $program = new Program();
-            $program->setTitle($serie['title']);
-            $program->setSynopsis($serie['synopsis']);
-            $program->setCategory($this->getReference($serie['category']));
+            $program->setTitle($sub_program['title']);
+            $program->setSynopsis($sub_program['synopsis']);
+            $program->setCategory($this->getReference('category_' . $sub_program['category']));
             $manager->persist($program);
         }
 
